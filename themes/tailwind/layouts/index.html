@@ -1,0 +1,7 @@
+{{ define "main" }}
+
+    {{ $recent_articles := (where .Site.Pages "IsPage" true) }}
+    {{ range first ($.Site.Params.latestSize | default 3) $recent_articles }}
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+    {{ end }}
+{{ end }}
