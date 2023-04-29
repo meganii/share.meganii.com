@@ -47,7 +47,7 @@
 {{ $itemid := .Destination | replaceRE $restr "$1" }}
 
 <div class="pt-4 text-center">
-    <img loading="lazy"
+    <img {{if eq $hero 0}} loading="lazy" decoding="async" {{ end }} 
         src="{{ .Destination }}"
         srcset="{{ $baseurl }}q_auto,f_auto,w_1024/{{ $itemid }} 1024w,
         {{ $baseurl }}q_auto,f_auto,w_864/{{ $itemid }} 864w,
@@ -62,7 +62,7 @@
 {{ else }}
 
 <div class="pt-4 text-center max-w-md">
-  <img {{if eq $hero 0}} loading="lazy" {{ end }} class="contain"
+  <img {{if eq $hero 0}} loading="lazy" decoding="async" {{ end }} class="contain"
       src="{{ .Destination }}"
       width="{{ $width }}"
       height="{{ $height }}"
