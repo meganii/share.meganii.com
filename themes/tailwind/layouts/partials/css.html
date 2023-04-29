@@ -2,7 +2,6 @@
 {{ if hugo.IsProduction }}
   {{- with $styles -}}
     {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
-    <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
     <style>{{- $styles.Content | safeCSS -}}</style>
   {{- end -}}
 {{ else }}
