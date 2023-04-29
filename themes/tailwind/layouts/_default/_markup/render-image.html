@@ -1,0 +1,74 @@
+
+{{ $width := 400}}
+{{ $height := 300}}
+{{ $hero := 0 }}
+
+{{ with .Title }}
+  <!-- =を含まない場合はパラメタ指定なしとみなす -->
+  {{ if gt (. | strings.Count "=") 0 }}
+
+    <!-- ?よりも後をqueryStringとする -->
+    {{ $queryString := (split . "?" )}} 
+    {{ if gt (len $queryString) 1 }}
+      <!-- & で分割 -->
+      {{ $paramString := (split (index $queryString 1) "&" )}}
+      {{ $params := "" }}
+      {{ range $paramString }}
+        {{ $kv := split . "=" }}
+        {{ $key := index $kv 0 }}
+        {{ $value := index $kv 1 }}
+        <!-- size -->
+        {{ if eq $key "size" }}
+          {{ $wh := split $value "x" }}
+          {{ $width = index $wh 0 }}
+          {{ $height = index $wh 1 }}
+        {{ end }}
+        <!-- hero -->
+        {{ if eq $key "hero" }}
+          {{ $hero = 1 }}
+        {{ end }}
+      {{ end }}
+    {{ else }}
+      {{ $kv := split . "=" }}
+      {{ $value := index $kv 1 }}
+      {{ $wh := split $value "x" }}
+      {{ $width = index $wh 0 }}
+      {{ $height = index $wh 1 }}
+    {{ end }}
+
+  {{ end }}
+{{ end }}
+
+
+{{ $baseurl := (printf "https://res.cloudinary.com/%s/image/upload/" "meganii") }}
+{{ $restr := (printf "^https?://res.cloudinary.com/%s/image/upload/.+/(.*)" "meganii" )}}
+
+{{ if (hasPrefix .Destination $baseurl) }}
+{{ $itemid := .Destination | replaceRE $restr "$1" }}
+
+<div class="pt-4 text-center">
+    <img loading="lazy"
+        src="{{ .Destination }}"
+        srcset="{{ $baseurl }}q_auto,f_auto,w_1024/{{ $itemid }} 1024w,
+        {{ $baseurl }}q_auto,f_auto,w_864/{{ $itemid }} 864w,
+        {{ $baseurl }}q_auto,f_auto,w_640/{{ $itemid }} 640w,
+        {{ $baseurl }}q_auto,f_auto,w_400/{{ $itemid }} 400w,
+        {{ $baseurl }}q_auto,f_auto,w_320/{{ $itemid }} 320w"
+        width="{{ $width }}"
+        height="{{ $height }}"
+        layout="intrinsic"
+        alt="{{ .Text | default $.Page.Title }}" />
+</div>
+{{ else }}
+
+<div class="pt-4 text-center">
+  <img {{if eq $hero 1}}data-hero{{ end }} class="contain"
+      src="{{ .Destination }}"
+      width="{{ $width }}"
+      height="{{ $height }}"
+      heights="(min-width:600px) 400px, 80%"
+      layout="responsive"
+      alt="{{ .Text | default $.Page.Title }}">
+  />
+</div>
+{{ end }}
