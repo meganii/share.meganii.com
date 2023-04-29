@@ -3,6 +3,7 @@
   {{- with $styles -}}
     {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
     <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
+    <style>{{- $styles.Content | safeCSS -}}</style>
   {{- end -}}
 {{ else }}
   <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
