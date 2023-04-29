@@ -1,0 +1,23 @@
+{
+  "name": "share.meganii.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meganii/share.meganii.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meganii/share.meganii.com/issues"
+  },
+  "homepage": "https://github.com/meganii/share.meganii.com#readme",
+  "devDependencies": {
+    "postcss-import": "^15.1.0",
+    "tailwindcss": "^3.3.2"
+  }
+}

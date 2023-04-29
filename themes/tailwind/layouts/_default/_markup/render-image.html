@@ -61,14 +61,12 @@
 </div>
 {{ else }}
 
-<div class="pt-4 text-center">
-  <img {{if eq $hero 1}}data-hero{{ end }} class="contain"
+<div class="pt-4 text-center max-w-md">
+  <img {{if eq $hero 0}} loading="lazy" {{ end }} class="contain"
       src="{{ .Destination }}"
       width="{{ $width }}"
       height="{{ $height }}"
-      heights="(min-width:600px) 400px, 80%"
       layout="responsive"
-      alt="{{ .Text | default $.Page.Title }}">
-  />
+      alt="{{ .Text | default $.Page.Title }}" />
 </div>
 {{ end }}
